@@ -2,19 +2,20 @@ const alunos = []
 
 while (true) {
     opcaoMenu = parseInt(prompt(`
-        ## Syscola ##
+        ########## Syscola ##########
         Selecione a opção desejada:
         [1] - Cadastrar aluno
         [2] - Listar alunos cadastrados
+        [3] - Sair
     `))
+    const notaAluno = []
     if (opcaoMenu == 1) {
         const nomeAluno = prompt("Digite o nome do aluno")
         const matriculaAluno = prompt("Digite a matricula(RA) do aluno")
-        const notaAluno = []
         while (true) {
-            let nota = parseInt(prompt(`Digite a(s) nota(s) do aluno ${nomeAluno}`))
+            const nota = parseInt(prompt(`Digite a(s) nota(s) do aluno ${nomeAluno}`))
             if (nota >= 0 && nota <= 10) {
-                notaAluno.pop(nota)
+                notaAluno.push(nota)
             } else {
                 alert("Você deve inserir notas entre 0 e 10")
             }
@@ -28,14 +29,25 @@ while (true) {
             }
         }
         
-        let id = alunos.length + 1
         alunos.push({
-            id,
+            id: alunos.length + 1,
             nome: nomeAluno,
             matricula: matriculaAluno,
-            notas: alunos[id-1].notas.push(notaAluno),
+            notas: notaAluno,
         })
-        console.log(alunos[id-1]);
+        continuarCadastro = parseInt(prompt(`
+            Deseja voltar ao menu inicial?
+            [1] - Sim
+            [2] - Não
+        `))
+        if (continuarCadastro == 1) {
+            continue
+        }
         break
-    }
+
+    } else if (opcaoMenu == 2) {
+        console.log(alunos)
+        break
+        
+    } else break
 }
