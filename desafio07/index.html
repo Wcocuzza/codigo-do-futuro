@@ -4,31 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Syscola</title>
 </head>
 <body>
-    <p>Francisco precisa de um sistema para gerenciar sua escola
-        Neste sistema precisamos capturar o aluno com as seguintes informações
-    </p>
-    <h4>aluno:</h4>
-    <ul>
-        <li>nome</li>
-        <li>matricula</li>
-        <li>notas</li>
-    </ul> 
-    <p>  
-        as notas podem ser quantas o sistema quiser, ou seja deixe o usuário escolher a quantidade de notas
-        <br>
-        neste sistema você irá precisar de um menu onde irá fazer o: <br>
-        Cadastro de alunos, digitando nome e matricula e notas<br>
-        vai precisar de um relatório, onde irá mostrar a lista dos alunos<br>
-        com nome, matricula, notas, média, aprovado/reprovado/recuperação<br>
-        Critério:<br>
-         se a nota for >= 7 aprovado<br>
-         se a nota for entre 5 e menor que 7 - Recuperação<br>
-         se a nota for menor que 5 -  Reprovado<br>
-    </p>
+    <h2>Bem vindo ao Syscola</h2>
 
+    <div class="div-form">
+        <form class="form-cadastro">
+            <input type="text" placeholder="Nome">
+            <input type="text" placeholder="Matricula">
+            <input type="text" placeholder="Notas">
+            <button type="button">Enviar</button>
+        </form>
+    </div>
     <script src="desafio07.js"></script>
 </body>
 </html>

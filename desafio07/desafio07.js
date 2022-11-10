@@ -1,4 +1,38 @@
-const alunos = []
+const sysCola = {}
+sysCola.alunos = []
+
+class Aluno {
+    constructor(nome, matricula) {
+        this.id = 0
+        this.nome = nome
+        this.matricula = matricula
+        this.notas = []
+    }
+
+    calculaMedia() {
+        let somaNotas = 0
+        this.notas.forEach(elemento => somaNotas += elemento)
+        return somaNotas / this.notas.length
+    }
+
+    setMedia() {
+        this.media = this.calculaMedia()
+    }
+
+    defineStatus() {
+        try {
+            if (this.media >= 7 && this.media <= 10) return "aprovado"
+            else if (this.media >= 5 && this.media < 7) return "recuperacao"
+            else return "reprovado"
+        } catch {
+            alert("Não foi possivel definir o 'status' - Verifique as notas.")
+        }
+    }
+
+    setStatus() {
+        this.status = this.defineStatus()
+    }
+}
 
 while (true) {
     opcaoMenu = parseInt(prompt(`
@@ -8,59 +42,34 @@ while (true) {
         [2] - Listar alunos cadastrados
         [3] - Sair
     `))
-    const notaAluno = []
-    const id = alunos.length + 1
 
     if (opcaoMenu == 1) {
         const nomeAluno = prompt("Digite o nome do aluno")
-        const matriculaAluno = prompt("Digite a matricula(RA) do aluno")
+        const matriculaAluno = prompt("Digite a matricula do aluno")
+        const aluno = new Aluno(nomeAluno, matriculaAluno)
         while (true) {
-            const nota = parseInt(prompt(`Digite a(s) nota(s) do aluno ${nomeAluno}`))
-            if (nota >= 0 && nota <= 10) {
-                notaAluno.push(nota)
-            } else {
+            const nota = parseFloat(prompt(`Digite a(s) nota(s) do aluno ${nomeAluno}`))
+            if (nota < 0 && nota > 10) {
                 alert("Você deve inserir notas entre 0 e 10")
-            }
-            continuarNotas = parseInt(prompt(`
+                continue
+            }    
+            aluno.notas.push(nota)
+            const continuarNotas = parseInt(prompt(`
                 Deseja inserir mais notas?
                 [1] - Sim
                 [2] - Não
             `))
-            if (continuarNotas != 1) {
+            if (continuarNotas == 1) continue
+            else if (continuarNotas != 1) {
+                aluno.setMedia()
+                aluno.setStatus()
                 break
             }
         }
         
-        alunos.push({
-            id,
-            nome: nomeAluno,
-            matricula: matriculaAluno,
-            notas: notaAluno,
-            media: 0,
-            status: "",
-        })
+        sysCola.alunos.push(aluno)
 
-        const calculaMedia = (alunos, id) => {
-            let totalNotas = 0
-            console.log(alunos[id-1].notas.length);
-            for (let i = 0; i < alunos[id-1].notas.length; i++) {
-                totalNotas += alunos[id-1].notas[i]
-            }
-            const media = totalNotas / alunos[id-1].notas.length
-            return parseFloat(media.toFixed(2))
-        }
-
-        if (alunos[id-1].media == 0) {
-            alunos[id-1].media = calculaMedia(alunos, id)
-        }
-        if (alunos[id-1].media >= 7) {
-            alunos[id-1].status = "aprovado"
-        }else if (alunos[id-1].media >= 5 && alunos[id-1].media < 7){
-            alunos[id-1].status = "recuperacao"
-        }else {
-            alunos[id-1].status = "reprovado"
-        }
-        continuarCadastro = parseInt(prompt(`
+        const continuarCadastro = parseInt(prompt(`
             Deseja voltar ao menu inicial?
             [1] - Sim
             [2] - Não
@@ -72,7 +81,7 @@ while (true) {
         break
 
     } else if (opcaoMenu == 2) {
-        console.log(alunos);
+        console.log(sysCola.alunos);
         break
 
     } else break
