@@ -1,3 +1,5 @@
+import { msgMenu, msgNotas, msgVoltar } from "./messages.js"
+
 const sysCola = {}
 sysCola.alunos = []
 
@@ -35,49 +37,25 @@ class Aluno {
 }
 
 while (true) {
-    opcaoMenu = parseInt(prompt(`
-        ########## Syscola ##########
-        Selecione a opção desejada:
-        [1] - Cadastrar aluno
-        [2] - Listar alunos cadastrados
-        [3] - Sair
-    `))
+    const opcaoMenu = parseInt(prompt(msgMenu))
 
     if (opcaoMenu == 1) {
         const nomeAluno = prompt("Digite o nome do aluno")
         const matriculaAluno = prompt("Digite a matricula do aluno")
         const aluno = new Aluno(nomeAluno, matriculaAluno)
-        while (true) {
-            const nota = parseFloat(prompt(`Digite a(s) nota(s) do aluno ${nomeAluno}`))
-            if (nota < 0 && nota > 10) {
-                alert("Você deve inserir notas entre 0 e 10")
-                continue
-            }    
-            aluno.notas.push(nota)
-            const continuarNotas = parseInt(prompt(`
-                Deseja inserir mais notas?
-                [1] - Sim
-                [2] - Não
-            `))
-            if (continuarNotas == 1) continue
-            else if (continuarNotas != 1) {
-                aluno.setMedia()
-                aluno.setStatus()
-                break
-            }
-        }
-        
+        const notas = prompt(msgNotas).split(', ')
+        notas.forEach((elemento, index, array) => array[index] = Number(elemento))
+
+        //TODO: Validar as notas
+        aluno.notas = notas
+        aluno.setMedia()
+        aluno.setStatus()
         sysCola.alunos.push(aluno)
 
-        const continuarCadastro = parseInt(prompt(`
-            Deseja voltar ao menu inicial?
-            [1] - Sim
-            [2] - Não
-        `))
+        const continuarCadastro = parseInt(prompt(msgVoltar))
         if (continuarCadastro == 1) {
             continue
         }
-        
         break
 
     } else if (opcaoMenu == 2) {
